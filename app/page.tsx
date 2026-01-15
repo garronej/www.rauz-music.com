@@ -1,10 +1,27 @@
 import Image from "next/image";
 import Link from "next/link";
+import AudioPlayer from "./components/AudioPlayer";
 import { getDictionary, getLocale } from "./lib/i18n";
 
 export default async function Home() {
   const locale = await getLocale();
   const { home } = getDictionary(locale);
+  const tracks = [
+    {
+      id: "hasta-luego",
+      title: "Hasta Luego",
+      artist: "Rauz",
+      cover: "/audio/Hasta%20Luego/cover.jpeg",
+      audioSrc: "/audio/Hasta%20Luego/audio.m4a",
+    },
+    {
+      id: "tes-con-simon",
+      title: "T'es Con Simon",
+      artist: "Rauz",
+      cover: "/audio/T%27es%20Con%20Simon/cover.jpg",
+      audioSrc: "/audio/T%27es%20Con%20Simon/audio.mp3",
+    },
+  ];
 
   return (
     <main>
@@ -122,58 +139,55 @@ export default async function Home() {
                 </a>
               </div>
             </div>
-            <div className="flex flex-col gap-6">
-              <div className="glass-card p-5">
-                <h3 className="font-display text-2xl text-[color:var(--foreground)]">
-                  {home.audioTitle}
-                </h3>
-                <p className="mt-2 text-sm leading-6 text-[color:var(--muted)]">
-                  {home.audioDescription}
-                </p>
-                <div className="mt-4 overflow-hidden rounded-2xl border border-[color:var(--border)]">
-                  <iframe
-                    className="h-[140px] w-full"
-                    src="https://www.youtube.com/embed/jxLQ78fidF4?modestbranding=1&rel=0"
-                    title={home.audioVideoTitle}
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    referrerPolicy="strict-origin-when-cross-origin"
-                    allowFullScreen
-                  />
-                </div>
-              </div>
-              <div className="glass-card p-5">
-                <h3 className="font-display text-2xl text-[color:var(--foreground)]">
-                  {home.socialTitle}
-                </h3>
-                <p className="mt-2 text-sm leading-6 text-[color:var(--muted)]">
-                  {home.socialDescription}
-                </p>
-                <div className="mt-4 flex flex-col gap-3">
-                  <a
-                    className="link-row"
-                    href="https://www.instagram.com/rauz.mazz/"
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    <span>Instagram</span>
-                    <span className="text-[color:var(--muted)]">
-                      {home.instagramHandle}
-                    </span>
-                  </a>
-                  <a
-                    className="link-row"
-                    href="https://www.tiktok.com/@rauzmusique"
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    <span>TikTok</span>
-                    <span className="text-[color:var(--muted)]">
-                      {home.tiktokHandle}
-                    </span>
-                  </a>
-                </div>
+            <div className="glass-card p-5">
+              <h3 className="font-display text-2xl text-[color:var(--foreground)]">
+                {home.socialTitle}
+              </h3>
+              <p className="mt-2 text-sm leading-6 text-[color:var(--muted)]">
+                {home.socialDescription}
+              </p>
+              <div className="mt-4 flex flex-col gap-3">
+                <a
+                  className="link-row"
+                  href="https://www.instagram.com/rauz.mazz/"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <span>Instagram</span>
+                  <span className="text-[color:var(--muted)]">
+                    {home.instagramHandle}
+                  </span>
+                </a>
+                <a
+                  className="link-row"
+                  href="https://www.tiktok.com/@rauzmusique"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <span>TikTok</span>
+                  <span className="text-[color:var(--muted)]">
+                    {home.tiktokHandle}
+                  </span>
+                </a>
               </div>
             </div>
+          </div>
+          <div className="mt-10">
+            <AudioPlayer
+              tracks={tracks}
+              labels={{
+                sectionLabel: home.audioLabel,
+                title: home.audioTitle,
+                description: home.audioDescription,
+                nowPlaying: home.audioPlayer.nowPlaying,
+                play: home.audioPlayer.play,
+                pause: home.audioPlayer.pause,
+                previous: home.audioPlayer.previous,
+                next: home.audioPlayer.next,
+                trackList: home.audioPlayer.trackList,
+                seek: home.audioPlayer.seek,
+              }}
+            />
           </div>
         </div>
       </section>
